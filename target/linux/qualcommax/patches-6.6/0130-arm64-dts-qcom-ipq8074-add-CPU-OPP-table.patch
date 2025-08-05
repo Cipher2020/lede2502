@@ -20,7 +20,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
 +			operating-points-v2 = <&cpu_opp_table>;
  		};
  
- 		cpu1: cpu@1 {
+ 		CPU1: cpu@1 {
 @@ -53,6 +54,7 @@
  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
  			clock-names = "cpu";
@@ -28,7 +28,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
 +			operating-points-v2 = <&cpu_opp_table>;
  		};
  
- 		cpu2: cpu@2 {
+ 		CPU2: cpu@2 {
 @@ -64,6 +66,7 @@
  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
  			clock-names = "cpu";
@@ -36,7 +36,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
 +			operating-points-v2 = <&cpu_opp_table>;
  		};
  
- 		cpu3: cpu@3 {
+ 		CPU3: cpu@3 {
 @@ -75,6 +78,7 @@
  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
  			clock-names = "cpu";
@@ -44,7 +44,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
 +			operating-points-v2 = <&cpu_opp_table>;
  		};
  
- 		l2_0: l2-cache {
+ 		L2_0: l2-cache {
 @@ -84,6 +88,54 @@
  		};
  	};

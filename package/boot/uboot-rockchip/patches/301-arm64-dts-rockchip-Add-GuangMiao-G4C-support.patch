@@ -21,12 +21,13 @@
 +};
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-guangmiao-g4c.dts
-@@ -0,0 +1,645 @@
+@@ -0,0 +1,646 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +
 +/dts-v1/;
-+#include <dt-bindings/input/input.h>
++#include <dt-bindings/input/linux-event-codes.h>
 +#include "rk3399.dtsi"
++#include "rk3399-opp.dtsi"
 +
 +/ {
 +	model = "SHAREVDI GuangMiao G4C";

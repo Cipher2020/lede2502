@@ -147,28 +147,21 @@ endef
 $(eval $(call KernelPackage,lib-zstd))
 
 
-define KernelPackage/lib-lz4-decompress
-  SUBMENU:=$(LIB_MENU)
-  TITLE:=LZ4 decompress
-  HIDDEN:=1
-  KCONFIG:=CONFIG_LZ4_DECOMPRESS
-  FILES:=$(LINUX_DIR)/lib/lz4/lz4_decompress.ko
-endef
-
-$(eval $(call KernelPackage,lib-lz4-decompress))
-
-
 define KernelPackage/lib-lz4
   SUBMENU:=$(LIB_MENU)
   TITLE:=LZ4 support
-  DEPENDS:=+kmod-crypto-acompress +kmod-lib-lz4-decompress
+  DEPENDS:=+kmod-crypto-acompress
   KCONFIG:= \
 	CONFIG_CRYPTO_LZ4 \
-	CONFIG_LZ4_COMPRESS
+	CONFIG_CRYPTO_LZ4HC \
+	CONFIG_LZ4_COMPRESS \
+	CONFIG_LZ4_DECOMPRESS
   FILES:= \
 	$(LINUX_DIR)/crypto/lz4.ko \
-	$(LINUX_DIR)/lib/lz4/lz4_compress.ko
-  AUTOLOAD:=$(call AutoProbe,lz4 lz4_compress)
+	$(LINUX_DIR)/lib/lz4/lz4_compress.ko \
+	$(LINUX_DIR)/lib/lz4/lz4hc_compress.ko \
+	$(LINUX_DIR)/lib/lz4/lz4_decompress.ko
+  AUTOLOAD:=$(call AutoProbe,lz4 lz4_compress lz4hc_compress lz4_decompress)
 endef
 
 define KernelPackage/lib-lz4/description
@@ -176,26 +169,6 @@ define KernelPackage/lib-lz4/description
 endef
 
 $(eval $(call KernelPackage,lib-lz4))
-
-
-define KernelPackage/lib-lz4hc
-  SUBMENU:=$(LIB_MENU)
-  TITLE:=LZ4HC support
-  DEPENDS:=+kmod-crypto-acompress +kmod-lib-lz4-decompress
-  KCONFIG:= \
-	CONFIG_CRYPTO_LZ4HC \
-	CONFIG_LZ4HC_COMPRESS
-  FILES:= \
-	$(LINUX_DIR)/crypto/lz4hc.ko \
-	$(LINUX_DIR)/lib/lz4/lz4hc_compress.ko
-  AUTOLOAD:=$(call AutoProbe,lz4hc lz4hc_compress)
-endef
-
-define KernelPackage/lib-lz4hc/description
- Kernel module for LZ4HC compression/decompression support
-endef
-
-$(eval $(call KernelPackage,lib-lz4hc))
 
 
 define KernelPackage/lib-842

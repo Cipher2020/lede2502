@@ -9,10 +9,11 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=e2fsprogs
 PKG_CPE_ID:=cpe:/a:e2fsprogs_project:e2fsprogs
-PKG_VERSION:=1.47.2
-PKG_HASH:=08242e64ca0e8194d9c1caad49762b19209a06318199b63ce74ae4ef2d74e63c
+PKG_VERSION:=1.46.6
+PKG_HASH:=8749efc57cda3b6cfcb16a2d2ccd8b8be676c8827e5bae338aa327219a9c2fc4
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@KERNEL/linux/kernel/people/tytso/e2fsprogs/v$(PKG_VERSION)/
 
 HOST_BUILD_PARALLEL:=1
@@ -26,16 +27,11 @@ HOST_CFLAGS += $(HOST_FPIC)
 
 HOST_CONFIGURE_ARGS += \
 	--disable-elf-shlibs \
-	--disable-libuuid \
+	--enable-libuuid \
 	--disable-tls \
 	--disable-nls \
 	--enable-threads=pth \
-	--disable-fuse2fs \
-	--with-crond-dir=no
-
-# The following uses pkg-config the wrong way around. Just override it.
-HOST_CONFIGURE_VARS += \
-	ac_cv_lib_uuid_uuid_generate=yes
+	--disable-fuse2fs
 
 define Host/Prepare
 	$(call Host/Prepare/Default)
@@ -43,13 +39,17 @@ define Host/Prepare
 endef
 
 define Host/Install
-	$(call Host/Install/Default)
-	$(SED) 's|^DIR=.*|DIR=$$$${STAGING_DIR_HOST}/share/et|' $(STAGING_DIR_HOST)/bin/compile_et
-	$(SED) 's|^DIR=.*|DIR=$$$${STAGING_DIR_HOST}/share/ss|' $(STAGING_DIR_HOST)/bin/mk_cmds
+	$(Host/Install/Default)
+	$(MAKE) -C $(HOST_BUILD_DIR)/lib/uuid install
+	mkdir -p $(STAGING_DIR_HOST)/include/e2fsprogs
+	$(CP) $(STAGING_DIR_HOST)/include/uuid $(STAGING_DIR_HOST)/include/e2fsprogs/
+	rm -rf $(STAGING_DIR_HOST)/include/uuid
+	$(INSTALL_DATA) $(HOST_BUILD_DIR)/lib/uuid/libuuid.a $(STAGING_DIR_HOST)/lib/
 endef
 
-define Host/Uninstall
-	-$(call Host/Compile/Default,uninstall)
+define Host/Clean
+	rm -f $(STAGING_DIR_HOST)/bin/e2fsck
+	rm -f $(STAGING_DIR_HOST)/bin/tune2fs
 endef
 
 $(eval $(call HostBuild))

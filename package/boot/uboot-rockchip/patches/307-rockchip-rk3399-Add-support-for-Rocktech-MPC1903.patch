@@ -1,11 +1,12 @@
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-mpc1903.dts
-@@ -0,0 +1,672 @@
+@@ -0,0 +1,688 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +
 +/dts-v1/;
-+#include <dt-bindings/input/input.h>
++#include <dt-bindings/input/linux-event-codes.h>
 +#include "rk3399.dtsi"
++#include "rk3399-opp.dtsi"
 +
 +/ {
 +	model = "Rocktech MPC1903";
@@ -65,7 +66,7 @@
 +		vin-supply = <&vcc5v0_sys>;
 +	};
 +
-+	vcc5v0_host: vcc5v0-host {
++	vcc5v0_host: vcc5v0-host-regulator {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
 +		gpio = <&gpio4 RK_PD1 GPIO_ACTIVE_HIGH>;
@@ -76,7 +77,7 @@
 +		vin-supply = <&vcc5v0_sys>;
 +	};
 +
-+	vcc_lan: vcc-lan {
++	vcc_lan: vcc-phy-regulator {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc_lan";
 +		regulator-always-on;
@@ -101,11 +102,19 @@
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&status_led_pin>;
 +
-+		status {
-+			label = "status";
++		status_led: led-status-led {
++			label = "status_led";
 +			linux,default-trigger = "heartbeat";
 +			gpios = <&gpio1 RK_PD0 GPIO_ACTIVE_LOW>;
 +		};
++	};
++
++	hub_control {
++		compatible = "rocktech,hub-control";
++		pinctrl-names = "default";
++		pinctrl-0 = <&hub_pwr>;
++		hub-pwr-gpio = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
++		status = "okay";
 +	};
 +};
 +
@@ -415,7 +424,7 @@
 +		compatible = "nxp,pcf85263";
 +		reg = <0x51>;
 +		pinctrl-0 = <&rtc_int>;
-+		pinctrl-names = "default";
++		rtc_int_gpio = <&gpio2 RK_PB4 GPIO_ACTIVE_HIGH>;
 +	};
 +};
 +
@@ -540,6 +549,8 @@
 +};
 +
 +&sdio0 {
++	#address-cells = <1>;
++	#size-cells = <0>;
 +	bus-width = <4>;
 +	clock-frequency = <50000000>;
 +	cap-sdio-irq;
@@ -554,9 +565,11 @@
 +};
 +
 +&sdmmc {
++	clock-freq-min-max = <400000 150000000>;
 +	bus-width = <4>;
 +	cap-mmc-highspeed;
 +	cap-sd-highspeed;
++	supports-sd;
 +	disable-wp;
 +	num-slots = <1>;
 +	vqmmc-supply = <&vcc_sdio>;
@@ -568,9 +581,11 @@
 +
 +&sdhci {
 +	bus-width = <8>;
++	keep-power-in-suspend;
 +	mmc-hs400-1_8v;
 +	mmc-hs400-enhanced-strobe;
 +	non-removable;
++	supports-emmc;
 +	status = "okay";
 +};
 +
@@ -583,17 +598,18 @@
 +};
 +
 +&tsadc {
++	status = "okay";
 +	rockchip,hw-tshut-temp = <120000>;
 +	/* tshut mode 0:CRU 1:GPIO */
 +	rockchip,hw-tshut-mode = <1>;
 +	/* tshut polarity 0:LOW 1:HIGH */
 +	rockchip,hw-tshut-polarity = <1>;
-+	status = "okay";
 +};
 +
 +&u2phy0 {
 +	status = "okay";
 +};
++
 +
 +&u2phy0_otg {
 +	status = "okay";
