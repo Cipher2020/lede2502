@@ -38,7 +38,9 @@ static init_state_t    init_state = INIT_COMPLETED;
 static init_state_t    init_state = INIT_NOT_COMPLETED;
 #endif
 
-#if ((!defined(FORCE_PROBE_RTL8367C) && !defined(FORCE_PROBE_RTL8370B) && !defined(FORCE_PROBE_RTL8364B) && !defined(FORCE_PROBE_RTL8363SC_VB)) || defined(FORCE_PROBE_RTL8367C))
+#define AUTO_PROBE (!defined(FORCE_PROBE_RTL8367C) && !defined(FORCE_PROBE_RTL8370B) && !defined(FORCE_PROBE_RTL8364B) && !defined(FORCE_PROBE_RTL8363SC_VB))
+
+#if (AUTO_PROBE || defined(FORCE_PROBE_RTL8367C))
 static rtk_switch_halCtrl_t rtl8367c_hal_Ctrl =
 {
     /* Switch Chip */
@@ -107,7 +109,7 @@ static rtk_switch_halCtrl_t rtl8367c_hal_Ctrl =
 };
 #endif
 
-#if ((!defined(FORCE_PROBE_RTL8367C) && !defined(FORCE_PROBE_RTL8370B) && !defined(FORCE_PROBE_RTL8364B) && !defined(FORCE_PROBE_RTL8363SC_VB)) || defined(FORCE_PROBE_RTL8370B))
+#if (AUTO_PROBE || defined(FORCE_PROBE_RTL8370B))
 static rtk_switch_halCtrl_t rtl8370b_hal_Ctrl =
 {
     /* Switch Chip */
@@ -176,7 +178,7 @@ static rtk_switch_halCtrl_t rtl8370b_hal_Ctrl =
 };
 #endif
 
-#if ((!defined(FORCE_PROBE_RTL8367C) && !defined(FORCE_PROBE_RTL8370B) && !defined(FORCE_PROBE_RTL8364B) && !defined(FORCE_PROBE_RTL8363SC_VB)) || defined(FORCE_PROBE_RTL8364B))
+#if (AUTO_PROBE || defined(FORCE_PROBE_RTL8364B))
 static rtk_switch_halCtrl_t rtl8364b_hal_Ctrl =
 {
     /* Switch Chip */
@@ -245,7 +247,7 @@ static rtk_switch_halCtrl_t rtl8364b_hal_Ctrl =
 };
 #endif
 
-#if ((!defined(FORCE_PROBE_RTL8367C) && !defined(FORCE_PROBE_RTL8370B) && !defined(FORCE_PROBE_RTL8364B) && !defined(FORCE_PROBE_RTL8363SC_VB)) || defined(FORCE_PROBE_RTL8363SC_VB))
+#if (AUTO_PROBE || defined(FORCE_PROBE_RTL8363SC_VB))
 static rtk_switch_halCtrl_t rtl8363sc_vb_hal_Ctrl =
 {
     /* Switch Chip */

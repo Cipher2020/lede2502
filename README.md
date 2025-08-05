@@ -21,16 +21,6 @@ ArmSoM-Sige 系列：软路由、单板计算机、小型服务器与智能家�
 
 [![sige1-zh](doc/sige-zh.jpg)](https://item.taobao.com/item.htm?id=721197662185)
 
-## 新一代 OpenWrt WIFI7 硬路由 CW Q3600 系列介绍
-
-畅网Wi-Fi7 ，如7而至（2.5G网口），双系统自由切换
-
-[商品介绍页面 - 畅网 品牌店](https://www.changwang.cn/products.html?typeid=149)
-
-购买链接：
-
-[![cw-zh](doc/cw-zh.jpg)](https://www.changwang.cn/product.html?id=29)
-
 ## 注意
 
 1. **不要用 root 用户进行编译**

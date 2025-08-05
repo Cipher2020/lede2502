@@ -24,7 +24,6 @@ platform_do_upgrade() {
 		;;
 	bananapi,bpi-r3|\
 	bananapi,bpi-r4|\
-	bananapi,bpi-r4-2g5|\
 	bananapi,bpi-r4-poe)
 		[ -e /dev/fit0 ] && fitblk /dev/fit0
 		[ -e /dev/fitrw ] && fitblk /dev/fitrw
@@ -45,14 +44,12 @@ platform_do_upgrade() {
 		esac
 		;;
 	cmcc,rax3000m-emmc|\
-	cmcc,xr30-emmc|\
 	glinet,gl-mt2500|\
 	glinet,gl-mt6000|\
 	glinet,gl-x3000|\
 	glinet,gl-xe3000|\
 	hf,m7986r1-emmc|\
 	huasifei,wh3000-emmc|\
-	huasifei,wh3000-pro|\
 	jdcloud,re-cs-05)
 		CI_KERNPART="kernel"
 		CI_ROOTPART="rootfs"
@@ -75,7 +72,6 @@ platform_check_image() {
 	case "$board" in
 	bananapi,bpi-r3|\
 	bananapi,bpi-r4|\
-	bananapi,bpi-r4-2g5|\
 	bananapi,bpi-r4-poe)
 		[ "$magic" != "d00dfeed" ] && {
 			echo "Invalid image type."
@@ -96,7 +92,6 @@ platform_copy_config() {
 	case "$(board_name)" in
 	bananapi,bpi-r3|\
 	bananapi,bpi-r4|\
-	bananapi,bpi-r4-2g5|\
 	bananapi,bpi-r4-poe)
 		case "$(cmdline_get_var root)" in
 		/dev/mmc*)
@@ -105,14 +100,12 @@ platform_copy_config() {
 		esac
 		;;
 	cmcc,rax3000m-emmc|\
-	cmcc,xr30-emmc|\
 	glinet,gl-mt2500|\
 	glinet,gl-mt6000|\
 	glinet,gl-x3000|\
 	glinet,gl-xe3000|\
 	hf,m7986r1-emmc|\
 	huasifei,wh3000-emmc|\
-	huasifei,wh3000-pro|\
 	jdcloud,re-cs-05)
 		emmc_copy_config
 		;;

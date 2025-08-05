@@ -19,9 +19,10 @@
 	};
 
 	nand {
-		compatible = "mtk,mt7620-nand";
+		status = "okay";
 		#address-cells = <1>;
 		#size-cells = <1>;
+		compatible = "mtk,mt7620-nand";
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -139,8 +140,9 @@
 	};
 
 	rtl8367rb {
-		compatible = "realtek,rtl8367b";
-		realtek,extif = <6 1 0 1 1 1 1 1 1 2>;
+		compatible = "realtek,rtl8367b", "rtl8367b";
+		cpu_port = <6>;
+		realtek,extif1 = <1 0 1 1 1 1 1 1 2>;
 		mii-bus = <&mdio0>;
 	};
 };
@@ -222,11 +224,11 @@
 };
 
 &bdinfo {
-	compatible = "nvmem-cells";
-	#address-cells = <1>;
-	#size-cells = <1>;
+        compatible = "nvmem-cells";
+        #address-cells = <1>;
+        #size-cells = <1>;
 
-	macaddr_bdinfo_18a: macaddr@18a {
-		reg = <0x18a 0x11>;
-	};
+        macaddr_bdinfo_18a: macaddr@18a {
+                reg = <0x18a 0x11>;
+        };
 };
