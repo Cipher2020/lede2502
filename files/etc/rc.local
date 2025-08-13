@@ -1,0 +1,4 @@
+# 启用并启动 ZeroTier
+/etc/init.d/zerotier enable
+/etc/init.d/zerotier start
+exit 0
