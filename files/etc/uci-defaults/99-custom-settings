@@ -1,0 +1,33 @@
+LAN_IP="192.168.5.1"
+WIFI_SSID_2G="HiwifiX"
+WIFI_PASS_2G="987654321"
+WIFI_SSID_5G="HiwifiX-5"
+WIFI_PASS_5G="987654321"
+
+uci -q batch <<EOI
+set network.lan.ipaddr='$LAN_IP'
+set network.lan.netmask='255.255.255.0'
+
+set wireless.radio0.disabled='0'
+set wireless.default_radio0.device='radio0'
+set wireless.default_radio0.network='lan'
+set wireless.default_radio0.mode='ap'
+set wireless.default_radio0.ssid='$WIFI_SSID_5G'
+set wireless.default_radio0.encryption='psk2'
+set wireless.default_radio0.key='$WIFI_PASS_5G'
+set wireless.default_radio0.disabled='0'
+
+set wireless.radio1.disabled='0'
+set wireless.default_radio1.device='radio1'
+set wireless.default_radio1.network='lan'
+set wireless.default_radio1.mode='ap'
+set wireless.default_radio1.ssid='$WIFI_SSID_2G'
+set wireless.default_radio1.encryption='psk2'
+set wireless.default_radio1.key='$WIFI_PASS_2G'
+set wireless.default_radio1.disabled='0'
+EOI
+
+uci commit network
+uci commit wireless
+
+exit 0
