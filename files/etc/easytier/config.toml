@@ -1,0 +1,24 @@
+instance_name = "815899403"
+ipv4 = "192.168.196.5/24"
+dhcp = false
+listeners = [
+    "tcp://0.0.0.0:11010",
+    "udp://0.0.0.0:11010",
+    "wg://0.0.0.0:11011",
+]
+
+[network_identity]
+network_name = "815899403"
+network_secret = "815899403"
+
+[[peer]]
+uri = "TCP://et1.fuis.top:11010"
+
+[[proxy_network]]
+cidr = "192.168.5.0/24"
+
+[[proxy_network]]
+cidr = "192.168.1.0/24"
+
+[flags]
+proxy_forward_by_system = true
